@@ -148,7 +148,8 @@
 }
 
 
-.scroll-fade-invisible { /* Invisible class */
+.scroll-fade-invisible:not(.scroll-fade-fade-in) { /* Invisible class */
+    transition: 0s !important;
     opacity: 0;
 }
 

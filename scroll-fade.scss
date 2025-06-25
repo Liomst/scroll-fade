@@ -1,40 +1,50 @@
-// Text fade
+// Text fade ( BETA, NOT STABLE ENOUGH FOR COMMERCIAL USE. )
 .scroll-fade-text {
-    min-height: 1em; // Firefox Jank
+    min-height: 1rem; // Firefox Jank
+
+    span {
+        font-size: inherit;
+        font-family: inherit;
+        font-weight: inherit;
+        padding: inherit;
+        margin: inherit;
+        color: inherit;
+    }
 
     // Straight fade directions
     &.f-u span {
-        transform: translate(0, 1em);
+        transform: translate(0, 1rem);
     }
 
     &.f-r span {
-        transform: translate(1em, 0);
+        transform: translate(1rem, 0);
     }
 
     &.f-d span {
-        transform: translate(0, -1em);
+        transform: translate(0, -1rem);
     }
 
     &.f-l span {
-        transform: translate(-1em, 0);
+        transform: translate(-1rem, 0);
     }
 
-    // Diagonal fade
+
+        // Diagonal fade
 
     &.f-u-r span {
-        transform: translate(1em, 1em);
+        transform: translate(1rem, 1rem);
     }
 
     &.f-d-r span {
-        transform: translate(1em, -1em);
+        transform: translate(1rem, -1rem);
     }
 
     &.f-u-l span {
-        transform: translate(-1em, 1em);
+        transform: translate(-1rem, 1rem);
     }
 
     &.f-d-l span {
-        transform: translate(-1em, -1em);
+        transform: translate(-1rem, -1rem);
     }
 
     // Mirror fade
@@ -54,71 +64,50 @@
 
 // Basic fades
 .scroll-fade {
-    transition: 1s !important;
+    transition: transform 1s cubic-bezier(0.215, 0.61, 0.355, 1), opacity 1s cubic-bezier(0.215, 0.61, 0.355, 1) !important;
+
 
     // Delays
-    &.delay-1 {
-        transition-delay: .05s !important;
-    }
-
-    &.delay-2 {
-        transition-delay: .1s !important;
-    }
-
-    &.delay-3 {
-        transition-delay: .015s !important;
-    }
-
-    &.delay-4 {
-        transition-delay: .2s !important;
-    }
-
-    &.delay-5 {
-        transition-delay: .025s !important;
-    }
-
-    &.delay-6 {
-        transition-delay: .3s !important;
-    }
-
-    &.delay-7 {
-        transition-delay: .35s !important;
+    @for $i from 1 through 20 {
+        &.delay-#{$i} {
+            transition-delay: #{$i * 0.1}s !important;
+        }
     }
 
     // Directional fades
 
     &.f-u {
-        transform: translate(0, 10em);
+        transform: translate(0, 6rem);
     }
 
     &.f-r {
-        transform: translate(10em, 0);
+        transform: translate(6rem, 0);
     }
 
     &.f-d {
-        transform: translate(0, -10em);
+        transform: translate(0, -6rem);
     }
 
     &.f-l {
-        transform: translate(-10em, 0);
+        transform: translate(-6rem, 0);
     }
 
     // Diagonal fade
 
     &.f-u-r {
-        transform: translate(10em, 10em);
+        transform: translate(6rem, 6rem);
     }
 
     &.f-d-r {
-        transform: translate(10em, -10em);
+        transform: translate(6rem, -6rem);
     }
 
     &.f-u-l {
-        transform: translate(-10em, 10em);
+        transform: translate(-6rem, 6rem);
     }
 
     &.f-d-l {
-        transform: translate(-10em, -10em);
+        transform: translate(-6rem, -6rem);
     }
 
     // Mirror fade

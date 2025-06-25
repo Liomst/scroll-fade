@@ -1,28 +1,32 @@
-import Utils from "./utils.js";
-
 class ScrollFade {
     constructor() {
         this.text_scroll_elements = document.querySelectorAll('.scroll-fade-text');
-        this.basic_scroll_elements = document.querySelectorAll('.scroll-fade');
+        this.basic_scroll_elements = document.querySelectorAll('.scroll-fade:not(.scroll-fade-text)');
         this.hideScrollElements();
         this.checkInView();
     }
 
     hideScrollElements() {
         this.text_scroll_elements.forEach(element => {
-            const words = element.innerHTML.split(/\s+/);
+            const text = element.innerHTML;
             element.innerHTML = '';
 
-            words.forEach(word => {
-                if ( word !== "" ) {
-                    const wordSpan = document.createElement('span');
-                    wordSpan.classList.add('scroll-fade-invisible', 'd-inline-block'); // Makes span invisible, and adds d-inline-block to make the transform property work.
-                    wordSpan.textContent = word;
+            // Split text into individual characters (including spaces)
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const charSpan = document.createElement('span');
+                charSpan.classList.add('scroll-fade-invisible', 'd-inline-block'); // Makes span invisible, and adds d-inline-block to make the transform property work.
 
-                    element.appendChild(wordSpan);
-                    element.appendChild(document.createTextNode(' '));
+                // Handle spaces properly
+                if (char === ' ') {
+                    charSpan.innerHTML = '&nbsp;';
+                } else {
+                    charSpan.textContent = char;
                 }
-            });
+
+                element.appendChild(charSpan);
+            }
+            // Don't add scroll-fade-invisible to text elements - they use span-based fade system
         });
 
         this.basic_scroll_elements.forEach(basic_scroll_element => {
@@ -87,6 +91,8 @@ class ScrollFade {
     fadeWords(element, fadeDelay) {
         const wordSpans = element.querySelectorAll('span.scroll-fade-invisible');
 
+        console.log('Fading', wordSpans.length, 'characters'); // Debug log
+
         wordSpans.forEach( ( wordSpan, index ) => {
             setTimeout(() => {
                 wordSpan.classList.replace('scroll-fade-invisible', 'scroll-fade-fade-in');
@@ -99,4 +105,6 @@ class ScrollFade {
     }
 }
 
-Utils.onLoad(new ScrollFade());
+document.addEventListener('DOMContentLoaded', () => {
+    new ScrollFade();
+});
